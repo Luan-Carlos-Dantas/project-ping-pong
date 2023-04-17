@@ -55,8 +55,16 @@ const rightPaddle = {
   y: 0,
   width: lineWidth,
   height: 200,
+  speed: 5,
+  _speedUp() {
+    this.speed += 2;
+  },
   _move() {
-    this.y = ball.y - this.height;
+    if (this.y + this.height / 2 < ball.y + ball.r) {
+      this.y += this.speed;
+    } else {
+      this.y -= this.speed;
+    }
   },
   draw() {
     canvaCtx.fillStyle = this.color;
@@ -133,9 +141,15 @@ const ball = {
       }
     }
   },
+  _speedUp() {
+    this.speed += 3;
+  },
   _pointUp() {
     this.x = field.width / 2;
     this.y = field.height / 2;
+
+    this._speedUp();
+    rightPaddle._speedUp();
   },
   _reverseX() {
     this.directionX *= -1;
